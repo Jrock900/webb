@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<html>
+   <head>
+      <title>Capstone Project</title>
+   </head>
+   <body>
+      <h1 style="text-align:center;">Shopping Cart</h1>
+      <br>
+      {% if cart_products %}
+         {% for products in cart_products %}
+         <div class="card mb-3" >
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img id="cimg" src="{{ products.image.url }}" class="img-fluid rounded-start">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body" style="margin-right: 10px;">
+                  <center>
+                  <h3 class="card-title">{{ products }}</h3>
+                  {% if products.is_sale %}
+                  <strike><p style="padding-left: 10px;">{{products.price}}</p></strike>
+                  <p style="padding-left: 10px;">{{products.sale_price}}</p>
+                  {% else %}
+                  <p style="padding-left: 10px;">{{products.price}}</p>
+                  {% endif %}
+                  <p class="card-text">{{ products.description }}</p>
+
+
+
+                  <div class="row justify-content-center">
+                     <div class="col-md-2">Qantity:</div>
+                     <div class="col-md-2">
+                 <select class="form-select form-select-sm" id="select{{products.id}}">
+                  
+                     {% for key, value in quantities.items %}
+                           {% if key == products.id|slugify %}
+                           <option selected> {{ value }} </option>
+                           {% endif %}
+                        {% endfor %}
+                        
+               
+                     <option value="1">1</option>
+                     <option value="2">2</option>
+                     <option value="3">3</option>
+                   </select>
+                  </center>
+                     </div>
+                     <center>
+                     <button type="button" data-index="{{products.id}}" class="btn btn-secondary update-cart">Update</button>
+                     <button type="button" data-index="{{products.id}}" class="btn btn-danger delete-product">Remove</button>
+
+                     </center>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+
+         {% endfor %}
+         <h3>Total: ${{ totals }}</h3>
+         {% else %}
+         <h2>Theres Nothing In Your Cart</h2>
+         {% endif %}
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+     
+      
+       
+
+
+
+
+      <br>
+      <br>
+      <br>
+
+      <br>
+
+      
+           
+     
+   </body>
+</html>
+
+
+
+<script>
+//update cart
+$(document).on('click','.update-cart', function(e){
+        e.preventDefault();
+        var productid = $(this).data('index');
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart:cart_update' %}",
+            data: {
+                product_id: $(this).data('index'),
+                product_qty: $('#select' + productid + ' option:selected').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+                //console.log(json)
+                //document.getElementById("cart_quantity").textContent = json.qty
+                location.reload();
+            },
+
+            error:function(xhr, errmsg, err){
+
+            }
+
+        });
+
+    })
+
+
+
+
+// Remove item from cart
+$(document).on('click','.delete-product', function(e){
+   e.preventDefault();
+   //var productid = $(this).data('index');
+
+   $.ajax({
+       type: 'POST',
+       url: "{% url 'cart:cart_delete' %}",
+       data: {
+           product_id: $(this).data('index'),
+           csrfmiddlewaretoken: '{{ csrf_token }}',
+           action: 'post'
+       },
+
+       success: function(json){
+           //console.log(json)
+           //document.getElementById("cart_quantity").textContent = json.qty
+           location.reload();
+       },
+
+       error:function(xhr, errmsg, err){
+
+       }
+
+   });
+
+})
+
+
+
+</script>
+
+{% endblock %}

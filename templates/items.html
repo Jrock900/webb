@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<img id="cimg" src="{{ product.image.url }}" />
+<h1 style="text-transform: capitalize;">{{product.name}}</h1>
+{% if product.is_sale %}
+<strike><h2 style="padding-left: 10px;">{{product.price}}</h2></strike>
+<h2 style="padding-left: 10px;">{{product.sale_price}}</h2>
+{% else %}
+<h2 style="padding-left: 10px;">{{product.price}}</h2>
+{% endif %}
+<p style="text-transform: capitalize;">{{product.description}}</p>
+<div class="row justify-content-left">
+    <div class="col-md-2">Qantity:</div>
+    <div class="col-md-2">
+<select class="form-select form-select-sm" id="qty-cart">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+    </div>
+</div>
+  <br>
+<button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add-cart">Add To Cart</button>
+
+
+<script>
+
+    $(document).on('click','#add-cart', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'cart:cart_add' %}",
+            data: {
+                product_id: $('#add-cart').val(),
+                product_qty: $('#qty-cart option:selected').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+                //console.log(json)
+                document.getElementById("cart_quantity").textContent = json.qty
+                location.reload();
+            },
+
+            error:function(xhr, errmsg, err){
+
+            }
+
+        });
+
+    })
+
+
+</script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Update User Profile</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{user_form }}
+    <input type="submit" value="Update Profile">
+</form>
+<br>
+<br>
+<a href="{% url 'account:update_password' %}" class="btn btn-secondary">Update Password</a>
+
+
+<a href="{% url 'account:account' %}" class="btn btn-secondary">Back to account</a>
+<a href="{% url 'account:logout' %}" class="btn btn-secondary">Logout</a>
+
+{% endblock %}

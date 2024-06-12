@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<html>
+
+   <body>
+      <h1>Search what you are looking for</h1>
+      <br>
+      <br>
+      <div class="card">
+        <div class="card-header">
+          Search For Products
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Search" name="searched">
+              </div>
+              <center>
+              <button type="submit" class="btn btn-secondary"> Search Products</button>
+        
+                </center>
+              
+          </form>
+
+        </div>
+      </div>
+      <br>
+      
+
+      {% if searched %}
+        {% for product in searched %}
+        <div class="container">
+            <div class="row">
+                <div class="card" style="width: 17.5rem;">
+                  <a href="{% url 'products:clothes' product.id %}"><img id="cimg" src="{{ product.image.url }}"/></a>
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-transform: capitalize; color: red;">{{product.name}}</h5>
+                    
+                    <a href="{% url 'products:clothes' product.id %}" class="btn btn-dark"">Interested?</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+      {% endif %}
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+   </body>
+</html>
+{% endblock %}

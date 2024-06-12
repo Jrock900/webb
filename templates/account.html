@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <h3>Welcome to the account page</h3>
+    <a href="{% url 'account:update_user' %}" class="btn btn-secondary">Update Profile</a>
+    <a href="{% url 'account:update_password' %}" class="btn btn-secondary">Update Password</a>
+    <a href="{% url 'account:update_info' %}" class="btn btn-secondary">Update Information</a>
+
+
+
+    {% else %}
+    <br>
+    <br>
+    <a href="{% url 'account:signup' %}" class="btn btn-secondary">Sign Up</a>
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</body>
+</html>
+{% endblock %}

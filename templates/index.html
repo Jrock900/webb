@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<html>
+   <head>
+      <title>Capstone Project</title>
+   </head>
+   <body>
+      <h1 style="text-align:center;">Who Told you About This</h1>
+      <div class="container">
+         <div class="row">
+             {% for product in products %}
+             <div class="card" style="width: 17.5rem;">
+               <a href="{% url 'products:clothes' product.id %}"><img id="cimg" src="{{ product.image }}"/></a>
+               <div class="card-body">
+                 <h5 class="card-title" style="text-transform: capitalize; color: red;">{{product.name}}</h5>
+                 
+                 <a href="{% url 'products:clothes' product.id %}" class="btn btn-dark"">Interested?</a>
+               </div>
+             </div>
+             {% endfor %}
+         </div>
+     </div>
+     
+   </body>
+</html>
+{% endblock %}
