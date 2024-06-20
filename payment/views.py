@@ -67,8 +67,6 @@ def process_order(request):
 
         shipping_address = f"{my_shipping['shipping_full_name']}\n{my_shipping['shipping_address1']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}\n"
         print(shipping_address)
-
-
         messages.success(request, "Order Placed")
         return redirect('products:home')
 
