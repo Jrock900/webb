@@ -40,6 +40,9 @@ def billing_info(request):
         quantities = cart.get_quants
         totals = cart.cart_total()
 
+        my_shipping = request.POST
+        request.session['my_shipping'] = my_shipping
+
         if request.user.is_authenticated:
             billing_form = PaymentForm()
             return render(request, "billing_info.html", {"cart_products": cart_products, "quantities": quantities, "totals": totals, "shipping_info": request.POST, "billing_form": billing_form})
@@ -52,6 +55,23 @@ def billing_info(request):
 
         shipping_form = request.POST
         return render(request, "billing_info.html", {"cart_products": cart_products, "quantities": quantities, "totals": totals, "shipping_form": shippingForm})
+    else:
+        messages.success(request, "Acess Denied")
+        return redirect('products:home')
+
+
+def process_order(request):
+    if request.POST:
+        payment_form = PaymentForm(request.POST or None)
+        my_shipping = request.session.get('my_shipping')
+
+        shipping_address = f"{my_shipping['shipping_full_name']}\n{my_shipping['shipping_address1']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}\n"
+        print(shipping_address)
+
+
+        messages.success(request, "Order Placed")
+        return redirect('products:home')
+
     else:
         messages.success(request, "Acess Denied")
         return redirect('products:home')
