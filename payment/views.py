@@ -4,6 +4,7 @@ from payment.forms import ShippingForm, PaymentForm
 from payment.models import ShippingAddress, Order, OrderItem
 from django.contrib import messages
 from django.contrib.auth.models import User
+from products.models import Product
 
 # Create your views here.
 
@@ -81,12 +82,57 @@ def process_order(request):
             user = request.user
             create_order = Order(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid )
             create_order.save()
+
+            order_id = create_order.pk
+
+            for product in cart_products():
+                product_id = product.id
+
+                if product.is_sale:
+                    price = product.sale_price
+
+                else:
+                    price = product.price
+
+                for key, value in quantities().items():
+                    if int(key) == product_id:
+                        create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, quantity=value, price=price,)
+                        create_order_item.save()
+            
+
+            for key in list(request.session.keys()):
+                if key == "session_key":
+                    del request.session[key]
+
             messages.success(request, "Order Placed")
             return redirect('products:home')
 
         else:
             create_order = Order(full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid )
             create_order.save()
+
+            order_id = create_order.pk
+
+            for product in cart_products():
+                product_id = product.id
+
+                if product.is_sale:
+                    price = product.sale_price
+
+                else:
+                    price = product.price
+
+                for key, value in quantities().items():
+                    if int(key) == product_id:
+                        create_order_item = OrderItem(order_id=order_id, product_id=product_id, quantity=value, price=price,)
+                        create_order_item.save()
+
+            
+            for key in list(request.session.keys()):
+                if key == "session_key":
+                    del request.session[key]
+
+
             messages.success(request, "Order Placed")
             return redirect('products:home')
 
