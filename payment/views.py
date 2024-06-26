@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from products.models import Product
 import datetime
+from account.models import Profile
 
 # Create your views here.
 
@@ -104,6 +105,9 @@ def process_order(request):
             for key in list(request.session.keys()):
                 if key == "session_key":
                     del request.session[key]
+
+            current_user = Profile.objects.filter(user__id=request.user.id)
+            current_user.update(old_cart="")
 
             messages.success(request, "Order Placed")
             return redirect('products:home')
