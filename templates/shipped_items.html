@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<section>
+  <article>
+    <h3>Shipped Items</h3>
+    <!--Begin row-->
+    <div class="row">
+      <!--Begin col-->
+      <div class="column">
+        
+      </div>
+      <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Price</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date Shipped</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for item in orders%}
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>${{ item.amount_paid }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.date_shipped }}</td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      <div class="column">
+        <figure class="figure">
+          <img
+            src="{% static 'img/speakerphone.jpeg' %}"
+            alt="Speakerphone"
+          />
+  
+        </figure>
+      </div>
+      <!--End col-->
+    </div>
+    <!--End row-->
+  </article>
+</section>
+{% endblock %}
