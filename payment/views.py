@@ -161,3 +161,14 @@ def shipped_items(request):
         messages.success(request, "Access Denied")
         return redirect('products:home')
 
+
+def orders(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        order = Order.objects.get(id=pk)
+        items = OrderItem.objects.filter(order=pk)
+        return render(request, "orders.html", {"order":order, "items":items})
+
+
+    else:
+        messages.success(request, "Access Denied")
+        return redirect('products:home')
