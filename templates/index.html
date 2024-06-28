@@ -8,11 +8,11 @@
    </head>
    <body>
       <h1 style="text-align:center;">Who Told you About This</h1>
-      <div class="container">
+      <div class="container-md">
          <div class="row">
              {% for product in products %}
-             <div class="card" style="width: 17.5rem;">
-               <a href="{% url 'products:clothes' product.id %}"><img id="cimg" src="{{ product.image }}"/></a>
+             <div class="card" style="height:3in; width: 3in;">
+               <a href="{% url 'products:clothes' product.id %}"><img class="card-img-top" src="{{ product.image }}"/></a>
                <div class="card-body">
                  <h5 class="card-title" style="text-transform: capitalize; color: red;">{{product.name}}</h5>
                  

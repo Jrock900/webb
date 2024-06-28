@@ -58,7 +58,7 @@
                 <div class="card-body">
                   <form method="POST" action="{% url 'payment:billing_info' %}">
                     {% csrf_token %}
-                  {{ shipping_form }}
+                  {{ shipping_form.as_p }}
                 </div>
               </div>
               <button type="submit" class="btn btn-secondary">Contine To Billing</button>

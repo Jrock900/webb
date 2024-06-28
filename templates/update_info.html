@@ -11,13 +11,14 @@
 <br>
 <form method="post">
     {% csrf_token %}
-    {{ form }}
+    {{ form.as_p }}
     <br>
     <br>
     
     <strong>Shipping Information</strong>
-    {{ shipping_form }}
-    <input type="submit" value="Update Information">
+    {{ shipping_form.as_p }}
+    <button class="btn btn-secondary" type="submit">Update Information</button>
+
 </form>
 <br>
 <br>
