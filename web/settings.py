@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-dcsc!o%$bgc@x=cpoa6$x#lh(z80l67m5qv9t%-f89$z*^*2l%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['webb-production-5b1f.up.railway.app', 'https://webb-production-5b1f.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['webb-production-5b1f.up.railway.app', 'https://webb-production-5b1f.up.railway.app']
 
 
 # Application definition
@@ -45,6 +46,8 @@ INSTALLED_APPS = [
     'account',
     'cart',
     'payment',
+    'whitenoise.runserver_nostatic',
+
 ]
 
 MIDDLEWARE = [
@@ -55,6 +58,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'web.urls'
@@ -130,6 +135,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
