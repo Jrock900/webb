@@ -52,15 +52,15 @@ def billing_info(request):
 
         host = request.get_host()
         paypal_dict = {
-            "business": settings.PAYPAL_RECEIVER_EMAIL,
-            "amount": totals,
-            "item_name": "Clothing Item",
-            "invoice": str(uuid.uuid4()),
-            "no_shipping": "2",
-            "currency_code": "USD",
-            "notify_url": "https://{}{}".format(host, reverse("paypal-ipn")),
-            "return_url": "https://{}{}".format(host, reverse("payment_success")),
-            "cancel_url": "https://{}{}".format(host, reverse("payment_failed")),
+            'business': settings.PAYPAL_RECEIVER_EMAIL,
+            'amount': totals,
+            'item_name': 'Clothing Item',
+            'invoice': str(uuid.uuid4()),
+            'no_shipping': "2",
+            'currency_code': 'USD',
+            'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
+            'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
+            'cancel_url': 'https://{}{}'.format(host, reverse("payment_failed")),
 
         }
 
