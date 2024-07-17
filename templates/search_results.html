@@ -31,9 +31,10 @@
       
 
       {% if searched %}
-        {% for product in searched %}
         <div class="container-md">
             <div class="row">
+        {% for product in searched %}
+        
                 <div class="card" style="height:3in; width: 3in;">
                   <a href="{% url 'products:clothes' product.id %}"><img id="card-img-top" src="{{ product.image.url }}"/></a>
                   <div class="card-body">
