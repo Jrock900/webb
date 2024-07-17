@@ -33,19 +33,20 @@
       {% if searched %}
         <div class="container-md">
             <div class="row">
-        {% for product in searched %}
-        
-                <div class="card" style="height:3in; width: 3in;">
-                  <a href="{% url 'products:clothes' product.id %}"><img id="card-img-top" src="{{ product.image.url }}"/></a>
-                  <div class="card-body">
-                    <h5 class="card-title" style="text-transform: capitalize; color: red;">{{product.name}}</h5>
-                    
-                    <a href="{% url 'products:clothes' product.id %}" class="btn btn-dark"">Interested?</a>
-                  </div>
+              <div class="container-md">
+                <div class="row">
+                    {% for product in searched %}
+                    <div class="card" style="height:3in; width: 3in;">
+                      <a href="{% url 'products:clothes' product.id %}"><img class="card-img-top" src="{{ product.image.url }}"/></a>
+                      <div class="card-body">
+                        <h5 class="card-title" style="text-transform: capitalize; color: red;">{{product.name}}</h5>
+                        
+                        <a href="{% url 'products:clothes' product.id %}" class="btn btn-dark"">Interested?</a>
+                      </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
-        </div>
-        {% endfor %}
 
 
       {% endif %}
