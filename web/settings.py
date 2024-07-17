@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'cart',
     'payment',
     'whitenoise.runserver_nostatic',
+    'paypal.standard.ipn',
 
 ]
 
@@ -144,3 +145,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+PAYPAL_TEST = True
+PAYPAL_RECEIVER_EMAIL = 'company@money.com'

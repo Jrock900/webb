@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 from products.models import Product
 import datetime
 from account.models import Profile
+from django.urls import reverse
+from paypal.standard.forms import PayPalPaymentsForm
+from django.conf import settings
+import uuid
 
 # Create your views here.
 
@@ -46,13 +50,29 @@ def billing_info(request):
         my_shipping = request.POST
         request.session['my_shipping'] = my_shipping
 
+        host = request.get_host()
+        paypal_dict = {
+            "business": settings.PAYPAL_RECEIVER_EMAIL,
+            "amount": totals,
+            "item_name": "Clothing Item",
+            "invoice": str(uuid.uuid4()),
+            "no_shipping": "2",
+            "currency_code": "USD",
+            "notify_url": "https://{}{}".format(host, reverse("paypal-ipn")),
+            "return_url": "https://{}{}".format(host, reverse("payment_success")),
+            "cancel_url": "https://{}{}".format(host, reverse("payment_failed")),
+
+        }
+
+        paypal_form =PayPalPaymentsForm(initial=paypal_dict)
+
         if request.user.is_authenticated:
             billing_form = PaymentForm()
-            return render(request, "billing_info.html", {"cart_products": cart_products, "quantities": quantities, "totals": totals, "shipping_info": request.POST, "billing_form": billing_form})
+            return render(request, "billing_info.html", {"paypal_form": paypal_form, "cart_products": cart_products, "quantities": quantities, "totals": totals, "shipping_info": request.POST, "billing_form": billing_form})
 
         else:
             billing_form = PaymentForm()
-            return render(request, "billing_info.html", {"cart_products": cart_products, "quantities": quantities, "totals": totals, "shipping_info": request.POST, "billing_form": billing_form})
+            return render(request, "billing_info.html", {"paypal_form": paypal_form, "cart_products": cart_products, "quantities": quantities, "totals": totals, "shipping_info": request.POST, "billing_form": billing_form})
 
 
 
@@ -220,3 +240,7 @@ def orders(request, pk):
     else:
         messages.success(request, "Access Denied")
         return redirect('products:home')
+    
+
+def payment_failed(request):
+    return render(request, "payment_failed.html", {})
