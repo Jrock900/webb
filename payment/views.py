@@ -58,9 +58,9 @@ def billing_info(request):
             'invoice': str(uuid.uuid4()),
             'no_shipping': "2",
             'currency_code': 'USD',
-            'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
-            'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
-            'cancel_return': 'https://{}{}'.format(host, reverse("payment_failed")),
+            'notify_url': 'https://{}{}'.format(host, reverse("payment:paypal-ipn")),
+            'return_url': 'https://{}{}'.format(host, reverse("payment:payment_success")),
+            'cancel_return': 'https://{}{}'.format(host, reverse("payment:payment_failed")),
 
         }
 
