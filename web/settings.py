@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-dcsc!o%$bgc@x=cpoa6$x#lh(z80l67m5qv9t%-f89$z*^*2l%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ 'webb-production-0c0e.up.railway.app', 'https://webb-production-0c0e.up.railway.app']
+ALLOWED_HOSTS = [ 'webb-production-0c0e.up.railway.app', 'https://webb-production-0c0e.up.railway.app',]
 CSRF_TRUSTED_ORIGINS = ['https://webb-production-0c0e.up.railway.app',]
 
 
