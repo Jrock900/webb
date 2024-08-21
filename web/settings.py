@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'railway',
         'USER': 'postgres',
         'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': 'roundhouse.proxy.rlwy.net',
+        'HOST': 'postgres.railway.internal',
         'PORT': '5432',
 
     }
