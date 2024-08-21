@@ -97,7 +97,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': os.environ['DB_PASSWORD'],
         'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '37253',
+        'PORT': '5432',
 
     }
 }
